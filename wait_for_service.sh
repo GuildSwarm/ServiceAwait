@@ -40,7 +40,7 @@ wait_IsReady() {
 	count=0
 	
 	while [[ "$RESPONSE" != 200 ]]; do
-	  RESPONSE=$(curl "$host:$port/checker" || true)
+	  RESPONSE=$(curl -s "$host:$port/checker" || true)
 	  sleep 2
 	  count=$((count+1))
 	  if [[ $count -ge $retries ]]; then
