@@ -33,14 +33,15 @@ wait_for() {
 #This function can be called during a container entrypoint that depends on another container to wait for it being ready before continuing with the entrypoint execution.
 wait_IsReady() {
 	local host="$1"
-	local port="${2:-8000}"
-	local retries="${3:-30}"
+ 	local endpoint="$2"
+	local port="${3:-8000}"
+	local retries="${4:-30}"
 	echo "Waiting for $host service to be ready..."
 	RESPONSE=""
 	count=0
 	
 	while [[ "$RESPONSE" != 200 ]]; do
-	  RESPONSE=$(curl -s "$host:$port/checker" || true)
+	  RESPONSE=$(curl -s "$host:$port/$endpoint" || true)
 	  sleep 2
 	  count=$((count+1))
 	  if [[ $count -ge $retries ]]; then
